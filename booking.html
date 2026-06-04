@@ -14,26 +14,25 @@
             text-align: center;
         }
 
-        /* Beautiful Small Currency Switcher */
+        /* Very Small Currency Switcher */
         #currency {
             position: fixed;
             top: 15px;
             right: 15px;
             z-index: 100;
-            padding: 8px 14px;
+            padding: 5px 8px;
             background: #ffd700;
             color: #1a0033;
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             font-weight: bold;
-            font-size: 0.9em;
+            font-size: 0.8em;
             cursor: pointer;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.4);
-            transition: all 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            min-width: 60px;
         }
         #currency:hover {
             background: #ffed4e;
-            transform: scale(1.05);
         }
 
         form {
@@ -67,14 +66,14 @@
 </head>
 <body>
 
-    <!-- Improved Currency Switcher -->
+    <!-- Very Small Currency Switcher -->
     <select id="currency" onchange="changeCurrency()">
-        <option value="USD">$ USD</option>
-        <option value="EUR">€ EUR</option>
-        <option value="GBP">£ GBP</option>
-        <option value="CAD">C$ CAD</option>
-        <option value="AUD">A$ AUD</option>
-        <option value="NGN">₦ NGN</option>
+        <option value="USD">$</option>
+        <option value="EUR">€</option>
+        <option value="GBP">£</option>
+        <option value="CAD">C$</option>
+        <option value="AUD">A$</option>
+        <option value="NGN">₦</option>
     </select>
 
     <header>
@@ -100,7 +99,7 @@
             
             <input type="date" required>
             <input type="time" required>
-            <textarea rows="4" placeholder="Any specific concerns or preferences? (deep tissue, stress relief, etc.)"></textarea>
+            <textarea rows="4" placeholder="Any specific concerns or preferences?"></textarea>
             
             <button type="submit">SUBMIT BOOKING REQUEST</button>
         </form>
@@ -138,7 +137,6 @@
 
         function handleSubmit(e) {
             e.preventDefault();
-
             const name = document.querySelector('input[placeholder="Full Name"]').value;
             const email = document.querySelector('input[placeholder="Email Address"]').value;
             const phone = document.querySelector('input[placeholder="Phone Number"]').value;
