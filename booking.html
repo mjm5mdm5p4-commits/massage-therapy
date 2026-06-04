@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Book Appointment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>📅 Book Appointment</h1>
+</header>
+
+<div class="form-container">
+
+    <input type="text" id="name" placeholder="Full Name">
+
+    <input type="email" id="email" placeholder="Email Address">
+
+    <input type="tel" id="phone" placeholder="Phone Number">
+
+    <select id="service">
+
+        <option>30 Minutes - $30</option>
+
+        <option>60 Minutes - $60</option>
+
+        <option>90 Minutes - $90</option>
+
+        <option>120 Minutes - $120</option>
+
+    </select>
+
+    <select id="payment">
+
+        <option>PayPal</option>
+
+        <option>Cash App</option>
+
+        <option>Chime</option>
+
+        <option>Bank Transfer</option>
+
+    </select>
+
+    <button onclick="bookNow()">
+        Continue
+    </button>
+
+</div>
+
+<script>
+
+function bookNow(){
+
+    localStorage.setItem("customerName",
+        document.getElementById("name").value);
+
+    localStorage.setItem("customerEmail",
+        document.getElementById("email").value);
+
+    localStorage.setItem("customerPhone",
+        document.getElementById("phone").value);
+
+    localStorage.setItem("service",
+        document.getElementById("service").value);
+
+    localStorage.setItem("payment",
+        document.getElementById("payment").value);
+
+    window.location.href = "receipt.html";
+}
+
+</script>
+
+</body>
+</html>
