@@ -1,77 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Book Appointment</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Session - Laura's Wellness</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a0033, #4b0082);
+            color: white;
+            text-align: center;
+        }
+        header {
+            background: rgba(0,0,0,0.7);
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #ffd700;
+        }
+        .subtitle {
+            font-size: 1.3em;
+            color: #bb86fc;
+        }
+        form {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        input::placeholder, textarea::placeholder {
+            color: #ddd;
+        }
+        button {
+            background: #ffd700;
+            color: #1a0033;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #ffed4e;
+        }
+        .services-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+    </style>
 </head>
-
 <body>
 
 <header>
-    <h1>📅 Book Appointment</h1>
+    <h1>LAURA'S WELLNESS</h1>
+    <p class="subtitle">LICENSED MASSAGE THERAPIST</p>
 </header>
 
-<div class="form-container">
+<section>
+    <h2>📅 Book Your Healing Session</h2>
+    <p>Virtual Consultations & In-Person Appointments Available</p>
 
-    <input type="text" id="name" placeholder="Full Name">
+    <form id="bookingForm" onsubmit="handleSubmit(event)">
+        <input type="text" placeholder="Full Name" required>
+        
+        <input type="email" placeholder="Email Address" required>
+        
+        <input type="tel" placeholder="Phone Number" required>
+        
+        <select required>
+            <option value="">Select Package</option>
+            <option value="30min">30 Minutes - $30</option>
+            <option value="60min">60 Minutes - $60</option>
+            <option value="90min">90 Minutes - $90</option>
+            <option value="120min">120 Minutes - $120</option>
+        </select>
+        
+        <input type="date" required>
+        
+        <input type="time" required>
+        
+        <textarea rows="4" placeholder="Any specific concerns or preferences? (e.g., deep tissue, stress relief, etc.)"></textarea>
+        
+        <button type="submit">SUBMIT BOOKING REQUEST</button>
+    </form>
 
-    <input type="email" id="email" placeholder="Email Address">
+    <div class="services-list">
+        <div>🧘 Therapeutic Massage</div>
+        <div>💪 Deep Tissue Relief</div>
+        <div>😌 Stress & Anxiety</div>
+        <div>🌙 Better Sleep</div>
+        <div>🔄 Circulation Booster</div>
+    </div>
 
-    <input type="tel" id="phone" placeholder="Phone Number">
+    <p><strong>Payment Methods:</strong> PayPal, Cash App, Chime, Bank Transfer, Cards</p>
+    <p><em>Prices in USD • Multi-currency accepted via PayPal</em></p>
+</section>
 
-    <select id="service">
-
-        <option>30 Minutes - $30</option>
-
-        <option>60 Minutes - $60</option>
-
-        <option>90 Minutes - $90</option>
-
-        <option>120 Minutes - $120</option>
-
-    </select>
-
-    <select id="payment">
-
-        <option>PayPal</option>
-
-        <option>Cash App</option>
-
-        <option>Chime</option>
-
-        <option>Bank Transfer</option>
-
-    </select>
-
-    <button onclick="bookNow()">
-        Continue
-    </button>
-
-</div>
+<footer style="background: rgba(0,0,0,0.8); padding: 20px; margin-top: 40px;">
+    <p>© 2026 Laura's Wellness • Licensed Massage Therapist</p>
+    <p>Message us on <strong>Facebook</strong> or <strong>X (Twitter)</strong> for faster response</p>
+</footer>
 
 <script>
-
-function bookNow(){
-
-    localStorage.setItem("customerName",
-        document.getElementById("name").value);
-
-    localStorage.setItem("customerEmail",
-        document.getElementById("email").value);
-
-    localStorage.setItem("customerPhone",
-        document.getElementById("phone").value);
-
-    localStorage.setItem("service",
-        document.getElementById("service").value);
-
-    localStorage.setItem("payment",
-        document.getElementById("payment").value);
-
-    window.location.href = "receipt.html";
-}
-
+    function handleSubmit(e) {
+        e.preventDefault();
+        alert("✅ Thank you! Your booking request has been received.\n\nLaura will contact you shortly to confirm.");
+        e.target.reset();
+    }
 </script>
 
 </body>
