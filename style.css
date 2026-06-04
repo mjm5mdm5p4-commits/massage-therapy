@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  color: #333;
+}
+
+.hero {
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.overlay {
+  background: rgba(0,0,0,0.5);
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.btn {
+  background: #2ecc71;
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.services {
+  padding: 50px;
+  text-align: center;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  width: 200px;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.booking {
+  padding: 50px;
+  text-align: center;
+}
+
+.booking form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 300px;
+  margin: auto;
+}
+
+.booking input, .booking select {
+  padding: 10px;
+}
+
+.booking button {
+  background: #2ecc71;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.payment {
+  text-align: center;
+  padding: 40px;
+  background: #fff;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #222;
+  color: white;
+}
