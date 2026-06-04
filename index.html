@@ -30,36 +30,22 @@
             transition: background 0.4s;
         }
 
-        /* Controls - Top Right */
-        .controls {
+        /* Theme Toggle - Right Side */
+        #theme-toggle {
             position: fixed;
             top: 15px;
             right: 15px;
             z-index: 100;
-            display: flex;
-            gap: 10px;
-            background: rgba(0,0,0,0.6);
-            padding: 8px;
-            border-radius: 12px;
-        }
-        .light-mode .controls {
-            background: rgba(255,255,255,0.7);
-        }
-
-        select, button {
-            padding: 8px 12px;
+            padding: 10px 14px;
+            background: var(--accent);
+            color: var(--accent-text);
             border: none;
-            border-radius: 8px;
-            font-weight: bold;
+            border-radius: 50%;
+            font-size: 1.3em;
             cursor: pointer;
         }
-        #currency {
+        .light-mode #theme-toggle {
             background: var(--accent);
-            color: var(--accent-text);
-        }
-        #theme-toggle {
-            background: var(--accent);
-            color: var(--accent-text);
         }
 
         /* Slideshow */
@@ -143,18 +129,8 @@
 </head>
 <body>
 
-    <!-- Controls: Currency + Theme -->
-    <div class="controls">
-        <select id="currency" onchange="changeCurrency()">
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
-            <option value="CAD">CAD</option>
-            <option value="AUD">AUD</option>
-            <option value="NGN">NGN</option>
-        </select>
-        <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
-    </div>
+    <!-- Dark/Light Mode Toggle (Index Only) -->
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
 
     <!-- HERO SLIDESHOW -->
     <div class="hero">
@@ -193,11 +169,11 @@
 
     <section style="background: rgba(0,0,0,0.3);">
         <h2>💆 Massage Packages</h2>
-        <div class="services" id="packages">
-            <div class="service-card"><h3 class="price" data-usd="30">30 Minutes — $30</h3></div>
-            <div class="service-card"><h3 class="price" data-usd="60">60 Minutes — $60</h3></div>
-            <div class="service-card"><h3 class="price" data-usd="90">90 Minutes — $90</h3></div>
-            <div class="service-card"><h3 class="price" data-usd="120">120 Minutes — $120</h3></div>
+        <div class="services">
+            <div class="service-card"><h3>30 Minutes — $30 USD</h3></div>
+            <div class="service-card"><h3>60 Minutes — $60 USD</h3></div>
+            <div class="service-card"><h3>90 Minutes — $90 USD</h3></div>
+            <div class="service-card"><h3>120 Minutes — $120 USD</h3></div>
         </div>
     </section>
 
@@ -211,7 +187,7 @@
             <div class="service-card">Bank Transfer</div>
             <div class="service-card">Credit / Debit Cards</div>
         </div>
-        <p><strong>Note:</strong> Prices update live based on selected currency.</p>
+        <p><strong>Note:</strong> Prices in USD. Switch to your currency on the booking page.</p>
     </section>
 
     <section>
@@ -236,39 +212,12 @@
             showSlide(currentSlide);
         }, 5000);
 
-        // Currency Rates (approximate - June 2026)
-        const rates = {
-            USD: { rate: 1,    symbol: '$' },
-            EUR: { rate: 0.86, symbol: '€' },
-            GBP: { rate: 0.74, symbol: '£' },
-            CAD: { rate: 1.35, symbol: 'C$' },
-            AUD: { rate: 1.48, symbol: 'A$' },
-            NGN: { rate: 1650, symbol: '₦' }
-        };
-
-        function changeCurrency() {
-            const curr = document.getElementById('currency').value;
-            const { rate, symbol } = rates[curr];
-
-            document.querySelectorAll('.price').forEach(price => {
-                const usd = parseFloat(price.getAttribute('data-usd'));
-                const newPrice = Math.round(usd * rate);
-                const baseText = price.textContent.split(' — ')[0];
-                price.textContent = `${baseText} — ${symbol}${newPrice}`;
-            });
-        }
-
-        // Theme Toggle
+        // Theme Toggle (Index Only)
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
             const isLight = document.body.classList.contains('light-mode');
             document.getElementById('theme-toggle').textContent = isLight ? '☀️' : '🌙';
         }
-
-        // Initialize
-        window.onload = () => {
-            changeCurrency(); // Set initial prices
-        };
     </script>
 </body>
 </html>
