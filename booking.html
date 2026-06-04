@@ -13,18 +13,22 @@
             color: white;
             text-align: center;
         }
-        header {
-            background: rgba(0,0,0,0.7);
-            padding: 20px;
+
+        /* Currency Selector - Right Side */
+        #currency {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            padding: 10px 14px;
+            background: #ffd700;
+            color: #1a0033;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
         }
-        h1 {
-            font-size: 2.5em;
-            color: #ffd700;
-        }
-        .subtitle {
-            font-size: 1.3em;
-            color: #bb86fc;
-        }
+
         form {
             max-width: 700px;
             margin: 40px auto;
@@ -42,10 +46,7 @@
             background: rgba(255,255,255,0.2);
             color: white;
         }
-        input::placeholder, textarea::placeholder {
-            color: #ddd;
-        }
-        button {
+        button[type="submit"] {
             background: #ffd700;
             color: #1a0033;
             padding: 15px 40px;
@@ -55,76 +56,110 @@
             cursor: pointer;
             margin-top: 20px;
         }
-        button:hover {
-            background: #ffed4e;
-        }
         .services-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
+        .service-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>LAURA'S WELLNESS</h1>
-    <p class="subtitle">LICENSED MASSAGE THERAPIST</p>
-</header>
+    <!-- Currency Switcher (Booking Only) -->
+    <select id="currency" onchange="changeCurrency()">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="CAD">CAD</option>
+        <option value="AUD">AUD</option>
+        <option value="NGN">NGN</option>
+    </select>
 
-<section>
-    <h2>📅 Book Your Healing Session</h2>
-    <p>Virtual Consultations & In-Person Appointments Available</p>
+    <header>
+        <h1>LAURA'S WELLNESS</h1>
+        <p style="color: #bb86fc; font-size: 1.3em;">LICENSED MASSAGE THERAPIST</p>
+    </header>
 
-    <form id="bookingForm" onsubmit="handleSubmit(event)">
-        <input type="text" placeholder="Full Name" required>
-        
-        <input type="email" placeholder="Email Address" required>
-        
-        <input type="tel" placeholder="Phone Number" required>
-        
-        <select required>
-            <option value="">Select Package</option>
-            <option value="30min">30 Minutes - $30</option>
-            <option value="60min">60 Minutes - $60</option>
-            <option value="90min">90 Minutes - $90</option>
-            <option value="120min">120 Minutes - $120</option>
-        </select>
-        
-        <input type="date" required>
-        
-        <input type="time" required>
-        
-        <textarea rows="4" placeholder="Any specific concerns or preferences? (e.g., deep tissue, stress relief, etc.)"></textarea>
-        
-        <button type="submit">SUBMIT BOOKING REQUEST</button>
-    </form>
+    <section>
+        <h2>📅 Book Your Healing Session</h2>
+        <p>Virtual Consultations & In-Person Appointments Available</p>
 
-    <div class="services-list">
-        <div>🧘 Therapeutic Massage</div>
-        <div>💪 Deep Tissue Relief</div>
-        <div>😌 Stress & Anxiety</div>
-        <div>🌙 Better Sleep</div>
-        <div>🔄 Circulation Booster</div>
-    </div>
+        <form id="bookingForm" onsubmit="handleSubmit(event)">
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="tel" placeholder="Phone Number" required>
+            
+            <select id="packageSelect" required>
+                <option value="">Select Package</option>
+                <option value="30" data-usd="30">30 Minutes — $30</option>
+                <option value="60" data-usd="60">60 Minutes — $60</option>
+                <option value="90" data-usd="90">90 Minutes — $90</option>
+                <option value="120" data-usd="120">120 Minutes — $120</option>
+            </select>
+            
+            <input type="date" required>
+            <input type="time" required>
+            <textarea rows="4" placeholder="Any specific concerns or preferences? (deep tissue, stress relief, etc.)"></textarea>
+            
+            <button type="submit">SUBMIT BOOKING REQUEST</button>
+        </form>
 
-    <p><strong>Payment Methods:</strong> PayPal, Cash App, Chime, Bank Transfer, Cards</p>
-    <p><em>Prices in USD • Multi-currency accepted via PayPal</em></p>
-</section>
+        <div class="services-list">
+            <div class="service-card">🧘 Therapeutic Massage</div>
+            <div class="service-card">💪 Deep Tissue</div>
+            <div class="service-card">😌 Stress & Anxiety</div>
+            <div class="service-card">🌙 Better Sleep</div>
+            <div class="service-card">🔄 Circulation</div>
+        </div>
 
-<footer style="background: rgba(0,0,0,0.8); padding: 20px; margin-top: 40px;">
-    <p>© 2026 Laura's Wellness • Licensed Massage Therapist</p>
-    <p>Message us on <strong>Facebook</strong> or <strong>X (Twitter)</strong> for faster response</p>
-</footer>
+        <p><strong>Payment Methods:</strong> PayPal, Cash App, Chime, Bank Transfer, Cards</p>
+        <p><em>Prices update live in selected currency</em></p>
+    </section>
 
-<script>
-    function handleSubmit(e) {
-        e.preventDefault();
-        alert("✅ Thank you! Your booking request has been received.\n\nLaura will contact you shortly to confirm.");
-        e.target.reset();
-    }
-</script>
+    <footer style="background: rgba(0,0,0,0.8); padding: 25px; margin-top: 40px; color: white;">
+        <p>© 2026 Laura's Wellness • Licensed Massage Therapist</p>
+        <p>Message us on Facebook or X for faster response</p>
+    </footer>
 
+    <script>
+        // Currency Rates
+        const rates = {
+            USD: { rate: 1,    symbol: '$' },
+            EUR: { rate: 0.86, symbol: '€' },
+            GBP: { rate: 0.74, symbol: '£' },
+            CAD: { rate: 1.35, symbol: 'C$' },
+            AUD: { rate: 1.48, symbol: 'A$' },
+            NGN: { rate: 1650, symbol: '₦' }
+        };
+
+        function changeCurrency() {
+            const curr = document.getElementById('currency').value;
+            const { rate, symbol } = rates[curr];
+
+            const options = document.querySelectorAll('#packageSelect option');
+            options.forEach(option => {
+                if (option.value) {
+                    const usd = parseFloat(option.getAttribute('data-usd'));
+                    const newPrice = Math.round(usd * rate);
+                    const baseText = option.textContent.split(' — ')[0];
+                    option.textContent = `${baseText} — ${symbol}${newPrice}`;
+                }
+            });
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert("✅ Thank you! Your booking request has been received.\n\nLaura will contact you shortly.");
+            e.target.reset();
+        }
+
+        window.onload = () => changeCurrency();
+    </script>
 </body>
 </html>
