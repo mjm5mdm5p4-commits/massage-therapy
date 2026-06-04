@@ -1,67 +1,113 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Receipt</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt - Laura's Wellness</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a0033, #4b0082);
+            color: white;
+            text-align: center;
+        }
+        .receipt-container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 2px solid #ffd700;
+        }
+        h1 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #bb86fc;
+            font-size: 1.2em;
+        }
+        .receipt {
+            text-align: left;
+            margin: 30px 0;
+            line-height: 2.2;
+        }
+        .receipt p {
+            margin: 12px 0;
+            font-size: 1.1em;
+        }
+        .receipt b {
+            color: #ffd700;
+            width: 160px;
+            display: inline-block;
+        }
+        button {
+            background: #ffd700;
+            color: #1a0033;
+            padding: 14px 35px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #ffed4e;
+        }
+        .thank-you {
+            margin-top: 30px;
+            font-size: 1.3em;
+            color: #bb86fc;
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-    <h1>🧾 Payment Receipt</h1>
-</header>
+    <div class="receipt-container">
+        <header>
+            <h1>LAURA'S WELLNESS</h1>
+            <p class="subtitle">LICENSED MASSAGE THERAPIST</p>
+            <h2>🧾 Payment Receipt</h2>
+        </header>
 
-<div class="receipt">
+        <div class="receipt">
+            <p><b>Receipt No:</b> <span id="receiptNo"></span></p>
+            <p><b>Date:</b> <span id="receiptDate"></span></p>
+            <p><b>Name:</b> <span id="name"></span></p>
+            <p><b>Email:</b> <span id="email"></span></p>
+            <p><b>Phone:</b> <span id="phone"></span></p>
+            <p><b>Service:</b> <span id="service"></span></p>
+            <p><b>Amount:</b> <span id="amount"></span></p>
+            <p><b>Payment Method:</b> <span id="payment"></span></p>
+        </div>
 
-    <h2>Appointment Receipt</h2>
+        <div class="thank-you">
+            Thank you for choosing Laura's Wellness!<br>
+            We look forward to helping you feel your best ✨
+        </div>
 
-    <p><b>Receipt No:</b>
-    <span id="receiptNo"></span></p>
+        <button onclick="window.print()">🖨 Print Receipt</button>
+    </div>
 
-    <p><b>Name:</b>
-    <span id="name"></span></p>
+    <script>
+        // Fill receipt from localStorage
+        document.getElementById("receiptNo").innerHTML = "LW-" + Date.now().toString().slice(-8);
+        document.getElementById("receiptDate").innerHTML = new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' 
+        });
 
-    <p><b>Email:</b>
-    <span id="email"></span></p>
+        document.getElementById("name").innerHTML = localStorage.getItem("customerName") || "N/A";
+        document.getElementById("email").innerHTML = localStorage.getItem("customerEmail") || "N/A";
+        document.getElementById("phone").innerHTML = localStorage.getItem("customerPhone") || "N/A";
+        document.getElementById("service").innerHTML = localStorage.getItem("service") || "N/A";
+        document.getElementById("amount").innerHTML = localStorage.getItem("amount") || "N/A";
+        document.getElementById("payment").innerHTML = localStorage.getItem("payment") || "N/A";
 
-    <p><b>Phone:</b>
-    <span id="phone"></span></p>
-
-    <p><b>Service:</b>
-    <span id="service"></span></p>
-
-    <p><b>Payment Method:</b>
-    <span id="payment"></span></p>
-
-    <button onclick="window.print()">
-        🖨 Print Receipt
-    </button>
-
-</div>
-
-<script>
-
-document.getElementById("receiptNo").innerHTML =
-"MSG" + Date.now();
-
-document.getElementById("name").innerHTML =
-localStorage.getItem("customerName");
-
-document.getElementById("email").innerHTML =
-localStorage.getItem("customerEmail");
-
-document.getElementById("phone").innerHTML =
-localStorage.getItem("customerPhone");
-
-document.getElementById("service").innerHTML =
-localStorage.getItem("service");
-
-document.getElementById("payment").innerHTML =
-localStorage.getItem("payment");
-
-</script>
-
+        // Auto print prompt after 2 seconds (optional)
+        // setTimeout(() => window.print(), 2000);
+    </script>
 </body>
 </html>
