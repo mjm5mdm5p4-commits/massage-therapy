@@ -5,47 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laura's Wellness - Licensed Massage Therapist</title>
     <style>
+        :root {
+            --bg: linear-gradient(135deg, #1a0033, #4b0082);
+            --text: white;
+            --card: rgba(255,255,255,0.1);
+            --accent: #ffd700;
+            --accent-text: #1a0033;
+        }
+        .light-mode {
+            --bg: linear-gradient(135deg, #f0e6ff, #d8b4fe);
+            --text: #2a0033;
+            --card: rgba(255,255,255,0.85);
+            --accent: #6b21a8;
+            --accent-text: white;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1a0033, #4b0082);
-            color: white;
+            background: var(--bg);
+            color: var(--text);
             text-align: center;
+            transition: background 0.4s;
         }
-        header {
-            background: rgba(0,0,0,0.7);
-            padding: 20px;
+
+        /* Controls - Top Right */
+        .controls {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+            background: rgba(0,0,0,0.6);
+            padding: 8px;
+            border-radius: 12px;
         }
-        h1 {
-            font-size: 2.8em;
-            margin: 10px 0;
+        .light-mode .controls {
+            background: rgba(255,255,255,0.7);
+        }
+
+        select, button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #currency {
+            background: var(--accent);
+            color: var(--accent-text);
+        }
+        #theme-toggle {
+            background: var(--accent);
+            color: var(--accent-text);
+        }
+
+        /* Slideshow */
+        .hero {
+            position: relative;
+            height: 480px;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .slide.active {
+            opacity: 1;
+        }
+        .slide h1 {
+            font-size: 3.4em;
+            margin: 0;
             color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
         }
-        .subtitle {
-            font-size: 1.3em;
+        .light-mode .slide h1 {
+            color: #6b21a8;
+        }
+        .slide .subtitle {
+            font-size: 1.55em;
             color: #bb86fc;
+            margin: 10px 0;
         }
+
         section {
-            padding: 40px 20px;
-            max-width: 1000px;
+            padding: 50px 20px;
+            max-width: 1100px;
             margin: 0 auto;
         }
         .services {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
             gap: 20px;
         }
         .service-card {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
+            background: var(--card);
+            padding: 25px;
             border-radius: 15px;
             backdrop-filter: blur(10px);
+            color: var(--text);
         }
         button {
-            background: #ffd700;
-            color: #1a0033;
-            padding: 15px 30px;
+            background: var(--accent);
+            color: var(--accent-text);
+            padding: 15px 35px;
             font-size: 1.2em;
             border: none;
             border-radius: 50px;
@@ -53,79 +128,147 @@
             margin: 20px;
         }
         button:hover {
-            background: #ffed4e;
+            filter: brightness(1.1);
         }
         .footer {
             background: rgba(0,0,0,0.8);
-            padding: 20px;
-            font-size: 0.9em;
+            padding: 25px;
+            font-size: 0.95em;
+            color: white;
+        }
+        .light-mode .footer {
+            background: rgba(107, 33, 168, 0.9);
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>LAURA'S WELLNESS</h1>
-    <p class="subtitle">LICENSED MASSAGE THERAPIST</p>
-</header>
+    <!-- Controls: Currency + Theme -->
+    <div class="controls">
+        <select id="currency" onchange="changeCurrency()">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="CAD">CAD</option>
+            <option value="AUD">AUD</option>
+            <option value="NGN">NGN</option>
+        </select>
+        <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </div>
 
-<section>
-    <h2>🌿 Experience Healing Touch</h2>
-    <p>Therapeutic massage for mind, body & soul</p>
-    
-    <div class="services">
-        <div class="service-card">
-            <h3>🧘 Therapeutic Massage</h3>
+    <!-- HERO SLIDESHOW -->
+    <div class="hero">
+        <div class="slide active">
+            <h1>LAURA'S WELLNESS</h1>
+            <p class="subtitle">LICENSED MASSAGE THERAPIST</p>
+            <p style="font-size:1.3em;">Healing Touch for Mind, Body & Soul</p>
         </div>
-        <div class="service-card">
-            <h3>💪 Deep Tissue Relief</h3>
+        <div class="slide">
+            <h1>LAURA'S WELLNESS</h1>
+            <p class="subtitle">DEEP TISSUE RELIEF</p>
+            <p style="font-size:1.3em;">Release Tension • Restore Balance</p>
         </div>
-        <div class="service-card">
-            <h3>😌 Stress & Anxiety Relief</h3>
+        <div class="slide">
+            <h1>LAURA'S WELLNESS</h1>
+            <p class="subtitle">STRESS & ANXIETY RELIEF</p>
+            <p style="font-size:1.3em;">Find Calm • Improve Sleep</p>
         </div>
-        <div class="service-card">
-            <h3>🌙 Improved Sleep Quality</h3>
-        </div>
-        <div class="service-card">
-            <h3>🔄 Circulation Booster</h3>
+        <div class="slide">
+            <h1>LAURA'S WELLNESS</h1>
+            <p class="subtitle">CIRCULATION BOOSTER</p>
+            <p style="font-size:1.3em;">Therapeutic Massage • Virtual & In-Person</p>
         </div>
     </div>
-</section>
 
-<section style="background: rgba(0,0,0,0.4);">
-    <h2>💆 Massage Packages</h2>
-    <div class="services">
-        <div class="service-card"><h3>30 Minutes - $30</h3></div>
-        <div class="service-card"><h3>60 Minutes - $60</h3></div>
-        <div class="service-card"><h3>90 Minutes - $90</h3></div>
-        <div class="service-card"><h3>120 Minutes - $120</h3></div>
-    </div>
-</section>
+    <section>
+        <h2>🌿 Our Services</h2>
+        <div class="services">
+            <div class="service-card">🧘 Therapeutic Massage</div>
+            <div class="service-card">💪 Deep Tissue Relief</div>
+            <div class="service-card">😌 Stress & Anxiety Relief</div>
+            <div class="service-card">🌙 Improved Sleep Quality</div>
+            <div class="service-card">🔄 Circulation Booster</div>
+        </div>
+    </section>
 
-<section>
-    <h2>💳 Payment Methods (Multi-Currency)</h2>
-    <p>We accept payments from clients worldwide.</p>
-    <div class="services">
-        <div class="service-card"><h3>PayPal</h3></div>
-        <div class="service-card"><h3>Cash App</h3></div>
-        <div class="service-card"><h3>Chime</h3></div>
-        <div class="service-card"><h3>Bank Transfer</h3></div>
-        <div class="service-card"><h3>Credit/Debit Cards</h3></div>
-    </div>
-    <p><strong>Note:</strong> Prices shown in USD. We can also accept payments in EUR, GBP, CAD, and other major currencies via PayPal or bank transfer.</p>
-</section>
+    <section style="background: rgba(0,0,0,0.3);">
+        <h2>💆 Massage Packages</h2>
+        <div class="services" id="packages">
+            <div class="service-card"><h3 class="price" data-usd="30">30 Minutes — $30</h3></div>
+            <div class="service-card"><h3 class="price" data-usd="60">60 Minutes — $60</h3></div>
+            <div class="service-card"><h3 class="price" data-usd="90">90 Minutes — $90</h3></div>
+            <div class="service-card"><h3 class="price" data-usd="120">120 Minutes — $120</h3></div>
+        </div>
+    </section>
 
-<section>
-    <a href="booking.html">
-        <button>BOOK YOUR SESSION TODAY</button>
-    </a>
-    <p>Virtual Consultations & In-Person Appointments Available</p>
-</section>
+    <section>
+        <h2>💳 Payment Methods</h2>
+        <p>We welcome clients from all countries</p>
+        <div class="services">
+            <div class="service-card">PayPal</div>
+            <div class="service-card">Cash App</div>
+            <div class="service-card">Chime</div>
+            <div class="service-card">Bank Transfer</div>
+            <div class="service-card">Credit / Debit Cards</div>
+        </div>
+        <p><strong>Note:</strong> Prices update live based on selected currency.</p>
+    </section>
 
-<footer class="footer">
-    <p>© 2026 Laura's Wellness • Licensed Massage Therapist</p>
-    <p>Message us on Facebook or X (Twitter) for inquiries</p>
-</footer>
+    <section>
+        <a href="booking.html"><button>BOOK YOUR SESSION TODAY</button></a>
+        <p>* Virtual Consultations & In-Person Appointments Available *</p>
+    </section>
 
+    <footer class="footer">
+        <p>© 2026 Laura's Wellness • Licensed Massage Therapist</p>
+        <p>Message us on Facebook or X for quick inquiries</p>
+    </footer>
+
+    <script>
+        // Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        function showSlide(n) {
+            slides.forEach((slide, i) => slide.classList.toggle('active', i === n));
+        }
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }, 5000);
+
+        // Currency Rates (approximate - June 2026)
+        const rates = {
+            USD: { rate: 1,    symbol: '$' },
+            EUR: { rate: 0.86, symbol: '€' },
+            GBP: { rate: 0.74, symbol: '£' },
+            CAD: { rate: 1.35, symbol: 'C$' },
+            AUD: { rate: 1.48, symbol: 'A$' },
+            NGN: { rate: 1650, symbol: '₦' }
+        };
+
+        function changeCurrency() {
+            const curr = document.getElementById('currency').value;
+            const { rate, symbol } = rates[curr];
+
+            document.querySelectorAll('.price').forEach(price => {
+                const usd = parseFloat(price.getAttribute('data-usd'));
+                const newPrice = Math.round(usd * rate);
+                const baseText = price.textContent.split(' — ')[0];
+                price.textContent = `${baseText} — ${symbol}${newPrice}`;
+            });
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            document.getElementById('theme-toggle').textContent = isLight ? '☀️' : '🌙';
+        }
+
+        // Initialize
+        window.onload = () => {
+            changeCurrency(); // Set initial prices
+        };
+    </script>
 </body>
 </html>
