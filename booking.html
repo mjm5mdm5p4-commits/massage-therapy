@@ -43,14 +43,41 @@
             border-radius: 20px;
             backdrop-filter: blur(10px);
         }
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.2);
-            color: white;
+        input,
+textarea,
+#packageSelect {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+#currency {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 60px !important;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    z-index: 9999;
+    background: #ffd700;
+    color: #1a0033;
+    border: none;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+#currency:hover {
+    background: #ffed4e;
+}
         }
         button[type="submit"] {
             background: #ffd700;
