@@ -14,7 +14,6 @@
             text-align: center;
         }
 
-        /* Small Currency Switcher */
         #currency {
             position: fixed;
             top: 12px;
@@ -28,7 +27,6 @@
             font-weight: bold;
             font-size: 0.85em;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         form {
@@ -58,22 +56,10 @@
             cursor: pointer;
             margin-top: 20px;
         }
-        .services-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 30px 0;
-        }
-        .service-card {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 12px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Small Currency Switcher -->
     <select id="currency" onchange="changeCurrency()">
         <option value="USD">$ USD</option>
         <option value="EUR">€ EUR</option>
@@ -106,18 +92,10 @@
             
             <input type="date" required>
             <input type="time" required>
-            <textarea rows="4" placeholder="Any specific concerns or preferences? (deep tissue, stress relief, etc.)"></textarea>
+            <textarea rows="4" placeholder="Any specific concerns or preferences?"></textarea>
             
             <button type="submit">SUBMIT BOOKING REQUEST</button>
         </form>
-
-        <div class="services-list">
-            <div class="service-card">🧘 Therapeutic Massage</div>
-            <div class="service-card">💪 Deep Tissue</div>
-            <div class="service-card">😌 Stress & Anxiety</div>
-            <div class="service-card">🌙 Better Sleep</div>
-            <div class="service-card">🔄 Circulation</div>
-        </div>
 
         <p><strong>Payment Methods:</strong> PayPal, Cash App, Chime, Bank Transfer, Cards</p>
     </section>
@@ -142,24 +120,23 @@
 
             document.querySelectorAll('#packageSelect option').forEach(option => {
                 if (option.value) {
-                    const usdPrice = parseFloat(option.getAttribute('data-usd'));
-                    const newPrice = Math.round(usdPrice * rate);
-                    const baseText = option.textContent.split(' — ')[0];
-                    option.textContent = `${baseText} — ${symbol}${newPrice}`;
+                    const usd = parseFloat(option.getAttribute('data-usd'));
+                    const newPrice = Math.round(usd * rate);
+                    const base = option.textContent.split(' — ')[0];
+                    option.textContent = `${base} — ${symbol}${newPrice}`;
                 }
             });
         }
 
         function handleSubmit(e) {
             e.preventDefault();
-
             const name = document.querySelector('input[placeholder="Full Name"]').value;
             const email = document.querySelector('input[placeholder="Email Address"]').value;
             const phone = document.querySelector('input[placeholder="Phone Number"]').value;
             
             const packageSelect = document.getElementById('packageSelect');
-            const selectedOption = packageSelect.options[packageSelect.selectedIndex];
-            const serviceText = selectedOption.textContent;
+            const selected = packageSelect.options[packageSelect.selectedIndex];
+            const serviceText = selected.textContent;
 
             localStorage.setItem("customerName", name);
             localStorage.setItem("customerEmail", email);
