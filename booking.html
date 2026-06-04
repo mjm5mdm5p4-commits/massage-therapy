@@ -14,7 +14,7 @@
             text-align: center;
         }
 
-        /* Smaller Currency Switcher */
+        /* Small Currency Switcher */
         #currency {
             position: fixed;
             top: 12px;
@@ -99,9 +99,9 @@
             
             <select id="packageSelect" required>
                 <option value="">Select Package</option>
-                <option value="60" data-usd="60">60 Minutes — $100</option>
-                <option value="90" data-usd="90">90 Minutes — $150</option>
-                <option value="120" data-usd="120">120 Minutes — $180</option>
+                <option value="60" data-usd="100">60 Minutes — $100</option>
+                <option value="90" data-usd="150">90 Minutes — $150</option>
+                <option value="120" data-usd="120">120 Minutes — $120</option>
             </select>
             
             <input type="date" required>
@@ -127,7 +127,6 @@
     </footer>
 
     <script>
-        // Currency Converter
         const rates = {
             USD: { rate: 1, symbol: '$' },
             EUR: { rate: 0.86, symbol: '€' },
@@ -143,15 +142,14 @@
 
             document.querySelectorAll('#packageSelect option').forEach(option => {
                 if (option.value) {
-                    const usd = parseFloat(option.getAttribute('data-usd'));
-                    const newPrice = Math.round(usd * rate);
-                    const base = option.textContent.split(' — ')[0];
-                    option.textContent = `${base} — ${symbol}${newPrice}`;
+                    const usdPrice = parseFloat(option.getAttribute('data-usd'));
+                    const newPrice = Math.round(usdPrice * rate);
+                    const baseText = option.textContent.split(' — ')[0];
+                    option.textContent = `${baseText} — ${symbol}${newPrice}`;
                 }
             });
         }
 
-        // Booking Form Submit + Receipt
         function handleSubmit(e) {
             e.preventDefault();
 
@@ -161,19 +159,15 @@
             
             const packageSelect = document.getElementById('packageSelect');
             const selectedOption = packageSelect.options[packageSelect.selectedIndex];
-            const service = selectedOption.text;
-            const amount = selectedOption.getAttribute('data-usd') ? 
-                          "$" + selectedOption.getAttribute('data-usd') : "N/A";
+            const serviceText = selectedOption.textContent;
 
-            // Save to localStorage for receipt
             localStorage.setItem("customerName", name);
             localStorage.setItem("customerEmail", email);
             localStorage.setItem("customerPhone", phone);
-            localStorage.setItem("service", service);
-            localStorage.setItem("amount", amount);
+            localStorage.setItem("service", serviceText);
+            localStorage.setItem("amount", serviceText.split('—')[1] || "$0");
             localStorage.setItem("payment", "PayPal / Bank Transfer");
 
-            // Go to receipt
             window.location.href = "receipt.html";
         }
 
