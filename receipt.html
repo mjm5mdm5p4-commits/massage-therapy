@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Receipt</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>🧾 Payment Receipt</h1>
+</header>
+
+<div class="receipt">
+
+    <h2>Appointment Receipt</h2>
+
+    <p><b>Receipt No:</b>
+    <span id="receiptNo"></span></p>
+
+    <p><b>Name:</b>
+    <span id="name"></span></p>
+
+    <p><b>Email:</b>
+    <span id="email"></span></p>
+
+    <p><b>Phone:</b>
+    <span id="phone"></span></p>
+
+    <p><b>Service:</b>
+    <span id="service"></span></p>
+
+    <p><b>Payment Method:</b>
+    <span id="payment"></span></p>
+
+    <button onclick="window.print()">
+        🖨 Print Receipt
+    </button>
+
+</div>
+
+<script>
+
+document.getElementById("receiptNo").innerHTML =
+"MSG" + Date.now();
+
+document.getElementById("name").innerHTML =
+localStorage.getItem("customerName");
+
+document.getElementById("email").innerHTML =
+localStorage.getItem("customerEmail");
+
+document.getElementById("phone").innerHTML =
+localStorage.getItem("customerPhone");
+
+document.getElementById("service").innerHTML =
+localStorage.getItem("service");
+
+document.getElementById("payment").innerHTML =
+localStorage.getItem("payment");
+
+</script>
+
+</body>
+</html>
