@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Your Session - Laura's Wellness</title>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         * { box-sizing: border-box; }
 
@@ -149,21 +148,21 @@
         <h2>📅 Book Your Healing Session</h2>
         <p>Virtual Consultations & In-Person Appointments Available</p>
 
-        <form id="bookingForm" onsubmit="handleSubmit(event)">
-            <input type="text"  id="fullName"  placeholder="Full Name"     required>
-            <input type="email" id="email"     placeholder="Email Address" required>
-            <input type="tel"   id="phone"     placeholder="Phone Number"  required>
+        <form id="bookingForm">
+            <input type="text"  id="fullName"  name="Full Name"     placeholder="Full Name"     required>
+            <input type="email" id="email"     name="Email"         placeholder="Email Address" required>
+            <input type="tel"   id="phone"     name="Phone Number"  placeholder="Phone Number"  required>
 
-            <select id="packageSelect" required>
+            <select id="packageSelect" name="Package" required>
                 <option value="">Select Package</option>
-                <option value="60"  data-usd="100">60 Minutes — $100</option>
-                <option value="90"  data-usd="150">90 Minutes — $150</option>
-                <option value="120" data-usd="180">120 Minutes — $180</option>
+                <option value="60 Minutes - $100"  data-usd="100">60 Minutes — $100</option>
+                <option value="90 Minutes - $150"  data-usd="150">90 Minutes — $150</option>
+                <option value="120 Minutes - $180" data-usd="180">120 Minutes — $180</option>
             </select>
 
-            <input type="date" id="apptDate" required>
-            <input type="time" id="apptTime" required>
-            <textarea id="message" rows="4" placeholder="Any specific concerns or preferences?"></textarea>
+            <input type="date" id="apptDate" name="Date" required>
+            <input type="time" id="apptTime" name="Time" required>
+            <textarea id="message" name="Notes" rows="4" placeholder="Any specific concerns or preferences?"></textarea>
 
             <button type="submit" id="submitBtn">SUBMIT BOOKING REQUEST</button>
         </form>
@@ -178,10 +177,7 @@
     <div id="toast"></div>
 
     <script>
-        emailjs.init("vMNkMcyjqInTfrX52");
-
-        const SERVICE_ID  = "service_5gszskr";
-        const TEMPLATE_ID = "template_vphnp4m";
+        const FORMSPREE_URL = "https://formspree.io/f/xvzngdbd";
 
         const rates = {
             USD: { rate: 1,    symbol: '$'  },
@@ -213,57 +209,64 @@
             setTimeout(() => { toast.style.display = 'none'; }, duration);
         }
 
-        async function handleSubmit(e) {
+        document.getElementById('bookingForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const btn = document.getElementById('submitBtn');
             btn.disabled    = true;
             btn.textContent = 'Sending…';
 
-            const name    = document.getElementById('fullName').value.trim();
-            const email   = document.getElementById('email').value.trim();
-            const phone   = document.getElementById('phone').value.trim();
-            const date    = document.getElementById('apptDate').value;
-            const time    = document.getElementById('apptTime').value;
-            const message = document.getElementById('message').value.trim();
-
+            const name     = document.getElementById('fullName').value.trim();
+            const email    = document.getElementById('email').value.trim();
+            const phone    = document.getElementById('phone').value.trim();
+            const date     = document.getElementById('apptDate').value;
+            const time     = document.getElementById('apptTime').value;
+            const message  = document.getElementById('message').value.trim();
             const packageSelect = document.getElementById('packageSelect');
             const packageText   = packageSelect.options[packageSelect.selectedIndex].textContent;
 
-            const templateParams = {
-                from_name  : name,
-                from_email : email,
-                phone      : phone,
-                package    : packageText,
-                date       : date,
-                time       : time,
-                message    : message || 'No additional notes.'
+            const formData = {
+                "Full Name"  : name,
+                "Email"      : email,
+                "Phone"      : phone,
+                "Package"    : packageText,
+                "Date"       : date,
+                "Time"       : time,
+                "Notes"      : message || 'No additional notes.'
             };
 
             try {
-                await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
+                const response = await fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
 
-                localStorage.setItem("customerName",  name);
-                localStorage.setItem("customerEmail", email);
-                localStorage.setItem("customerPhone", phone);
-                localStorage.setItem("service",       packageText);
-                localStorage.setItem("amount",        packageText.split('—')[1]?.trim() || "$0");
-                localStorage.setItem("payment",       "PayPal / Bank Transfer");
+                if (response.ok) {
+                    localStorage.setItem("customerName",  name);
+                    localStorage.setItem("customerEmail", email);
+                    localStorage.setItem("customerPhone", phone);
+                    localStorage.setItem("service",       packageText);
+                    localStorage.setItem("amount",        packageText.split('—')[1]?.trim() || "$0");
+                    localStorage.setItem("payment",       "PayPal / Bank Transfer");
 
-                showToast('✅ Booking sent! You will receive a confirmation shortly.', 'success');
-                setTimeout(() => { window.location.href = "receipt.html"; }, 2000);
+                    showToast('✅ Booking sent! We will contact you shortly.', 'success');
+                    setTimeout(() => { window.location.href = "receipt.html"; }, 2000);
+                } else {
+                    throw new Error('Failed');
+                }
 
             } catch (error) {
-                console.error("EmailJS error:", error);
-                showToast('❌ Something went wrong. Please try again or contact us directly.', 'error', 7000);
+                showToast('❌ Something went wrong. Please try again.', 'error', 7000);
                 btn.disabled    = false;
                 btn.textContent = 'SUBMIT BOOKING REQUEST';
             }
-        }
+        });
 
         window.onload = () => changeCurrency();
     </script>
 </body>
 </html>
+
 
 
