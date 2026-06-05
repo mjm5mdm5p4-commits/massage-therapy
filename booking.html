@@ -55,7 +55,8 @@
 
         input,
         textarea,
-        #packageSelect {
+        #packageSelect,
+        #paymentSelect {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -74,7 +75,8 @@
             filter: invert(1);
         }
 
-        #packageSelect option { background: #2d0060; color: white; }
+        #packageSelect option,
+        #paymentSelect option { background: #2d0060; color: white; }
 
         button[type="submit"] {
             background: #ffd700;
@@ -149,15 +151,26 @@
         <p>Virtual Consultations & In-Person Appointments Available</p>
 
         <form id="bookingForm">
-            <input type="text"  id="fullName"  name="Full Name"     placeholder="Full Name"     required>
-            <input type="email" id="email"     name="Email"         placeholder="Email Address" required>
-            <input type="tel"   id="phone"     name="Phone Number"  placeholder="Phone Number"  required>
+            <input type="text"  id="fullName" name="Full Name"    placeholder="Full Name"     required>
+            <input type="email" id="email"    name="Email"        placeholder="Email Address" required>
+            <input type="tel"   id="phone"    name="Phone Number" placeholder="Phone Number"  required>
 
             <select id="packageSelect" name="Package" required>
                 <option value="">Select Package</option>
                 <option value="60 Minutes - $100"  data-usd="100">60 Minutes — $100</option>
                 <option value="90 Minutes - $150"  data-usd="150">90 Minutes — $150</option>
                 <option value="120 Minutes - $180" data-usd="180">120 Minutes — $180</option>
+            </select>
+
+            <select id="paymentSelect" name="Payment Method" required>
+                <option value="">Select Payment Method</option>
+                <option value="PayPal">💳 PayPal</option>
+                <option value="Chime">🔵 Chime</option>
+                <option value="Bitcoin">₿ Bitcoin</option>
+                <option value="Bank Transfer">🏦 Bank Transfer</option>
+                <option value="Credit/Debit Card">💳 Credit/Debit Card</option>
+                <option value="Zelle">⚡ Zelle</option>
+                <option value="Gift Card">🎁 Gift Card</option>
             </select>
 
             <input type="date" id="apptDate" name="Date" required>
@@ -167,7 +180,7 @@
             <button type="submit" id="submitBtn">SUBMIT BOOKING REQUEST</button>
         </form>
 
-        <p><strong>Payment Methods:</strong> PayPal, Cash App, Chime, Bank Transfer, Cards</p>
+        <p><strong>Payment Methods:</strong> PayPal, Chime, Bitcoin, Bank Transfer, Cards, Zelle, Gift Card</p>
     </section>
 
     <footer>
@@ -216,23 +229,28 @@
             btn.disabled    = true;
             btn.textContent = 'Sending…';
 
-            const name     = document.getElementById('fullName').value.trim();
-            const email    = document.getElementById('email').value.trim();
-            const phone    = document.getElementById('phone').value.trim();
-            const date     = document.getElementById('apptDate').value;
-            const time     = document.getElementById('apptTime').value;
-            const message  = document.getElementById('message').value.trim();
+            const name    = document.getElementById('fullName').value.trim();
+            const email   = document.getElementById('email').value.trim();
+            const phone   = document.getElementById('phone').value.trim();
+            const date    = document.getElementById('apptDate').value;
+            const time    = document.getElementById('apptTime').value;
+            const message = document.getElementById('message').value.trim();
+
             const packageSelect = document.getElementById('packageSelect');
             const packageText   = packageSelect.options[packageSelect.selectedIndex].textContent;
 
+            const paymentSelect = document.getElementById('paymentSelect');
+            const paymentText   = paymentSelect.options[paymentSelect.selectedIndex].textContent;
+
             const formData = {
-                "Full Name"  : name,
-                "Email"      : email,
-                "Phone"      : phone,
-                "Package"    : packageText,
-                "Date"       : date,
-                "Time"       : time,
-                "Notes"      : message || 'No additional notes.'
+                "Full Name"      : name,
+                "Email"          : email,
+                "Phone"          : phone,
+                "Package"        : packageText,
+                "Payment Method" : paymentText,
+                "Date"           : date,
+                "Time"           : time,
+                "Notes"          : message || 'No additional notes.'
             };
 
             try {
@@ -248,7 +266,7 @@
                     localStorage.setItem("customerPhone", phone);
                     localStorage.setItem("service",       packageText);
                     localStorage.setItem("amount",        packageText.split('—')[1]?.trim() || "$0");
-                    localStorage.setItem("payment",       "PayPal / Bank Transfer");
+                    localStorage.setItem("payment",       paymentText);
 
                     showToast('✅ Booking sent! We will contact you shortly.', 'success');
                     setTimeout(() => { window.location.href = "receipt.html"; }, 2000);
@@ -267,6 +285,7 @@
     </script>
 </body>
 </html>
+
 
 
 
